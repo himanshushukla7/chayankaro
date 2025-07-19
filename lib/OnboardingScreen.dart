@@ -62,33 +62,60 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ClipOval(
-                      child: Image.asset(
-                        _onboardingData[index]['image']!,
-                        height: 220,
-                        width: 220,
-                        fit: BoxFit.cover,
+                    // Circular background with image
+                    Center(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: 328,
+                            width: 328,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF2F4FF), // Outer light circle
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Container(
+                            height: 287,
+                            width: 287,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFE5EAFF), // Inner lighter circle
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(
+                              child: Image.asset(
+                                _onboardingData[index]['image']!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
+
+                    // Title Text
                     Text(
                       _onboardingData[index]['title']!,
-                      style: TextStyle(
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'SFProBold',
                         color: Color(0xFFB94D05),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
+
+                    // Subtitle Text
                     Text(
                       _onboardingData[index]['subtitle']!,
-                      style: TextStyle(
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'SFProRegular',
                         color: Colors.black87,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -96,24 +123,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
           ),
 
-          // Skip Button
-          Positioned(
-            top: 50,
-            right: 24,
-            child: GestureDetector(
-              onTap: _skip,
-              child: Text(
-                "Skip",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'SFProSemibold',
-                  color: Color(0xFFFF6F00),
-                ),
+          // Updated Skip Button with Background
+           Positioned(
+             top: 50,
+             right: 24,
+             child: GestureDetector(
+               onTap: _skip,
+               child: Container(
+                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                color: Color(0xFFE6EAFF), // Background color from spec
+                borderRadius: BorderRadius.circular(20),
               ),
-            ),
-          ),
+             child: Text(
+               "Skip",
+                style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'SFProSemibold',
+                color: Color(0xFFFF6F00),
+        ),
+      ),
+    ),
+  ),
+),
 
-          // Bottom Arrow
+
+          // Bottom Arrow Button
           Positioned(
             bottom: 50,
             left: 0,
@@ -133,7 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // Indicator Dots
+          // Dots Indicator
           Positioned(
             bottom: 20,
             left: 0,

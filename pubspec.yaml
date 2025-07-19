@@ -62,6 +62,8 @@ flutter:
     - assets/onboard1.jpg
     - assets/onboard2.jpg
     - assets/onboard3.jpg
+    - assets/chayankaro_logo.gif
+
 
   fonts:
     - family: SFPro
