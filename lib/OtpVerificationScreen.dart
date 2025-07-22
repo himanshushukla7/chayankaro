@@ -11,7 +11,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   int _secondsRemaining = 60;
   bool _canResend = false;
   String _phoneNumber = "";
-  List<TextEditingController> _otpControllers = List.generate(4, (_) => TextEditingController());
+  List<TextEditingController> _otpControllers =
+      List.generate(4, (_) => TextEditingController());
 
   @override
   void didChangeDependencies() {
@@ -61,7 +62,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   Widget _buildOtpFields() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(4, (index) {
         return Container(
           width: 55,
@@ -116,6 +117,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             Center(
               child: Text(
                 "Enter verification code",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
                   fontFamily: 'SFProDisplay',
