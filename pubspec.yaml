@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.7.0
+  url_launcher: ^6.2.5
 
 
 dev_dependencies:
@@ -47,6 +48,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -66,7 +74,6 @@ flutter:
     - assets/onboard3.jpg
     - assets/chayankaro_logo.gif
     - assets/banner_woman.png
-    - assets/men_wellness.jpg
     - assets/a1.jpg    
     - assets/a2.jpg
     - assets/a3.jpg
@@ -102,6 +109,25 @@ flutter:
     - assets/icons/whatsapp.png
     - assets/icons/fb.png
     - assets/icons/copy.png
+    - assets/icons/coins.png
+    - assets/icons/help.png
+    - assets/icons/userprofile.png
+    - assets/icons/location.png
+    - assets/icons/refer.png
+    - assets/icons/rate.png
+    - assets/icons/about.png
+    - assets/icons/settings.png
+    - assets/icons/logout.png
+    - assets/icons/edit.png
+    - assets/icons/check.png
+    - assets/icons/insta.png
+    - assets/icons/youtube.png
+    - assets/icons/emergency.png    
+    - assets/icons/home.png
+    - assets/icons/calendar.png
+    - assets/icons/user.png
+    - assets/cleanup.png
+    - assets/facial.png
     - assets/saathi1.png
     - assets/saathi2.png
     - assets/saathi3.png

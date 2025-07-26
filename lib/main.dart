@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'SplashScreen.dart';
-import 'OnboardingScreen.dart';
-import 'LoginScreen.dart';
-import 'OtpVerificationScreen.dart';
-import 'home_screen.dart'; // 👈 Don't forget to import this!
+
+import 'views/splash/splash_screen.dart';
+import 'widgets/OnboardingScreen.dart';
+import 'views/login/login_screen.dart';
+import 'views/login/otp_verification_screen.dart';
+import 'views/home/home_screen.dart';
 
 void main() {
   runApp(ChayanKaroApp());
@@ -16,8 +17,8 @@ class ChayanKaroApp extends StatelessWidget {
       title: 'ChayanKaro',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'SFPro', // Ensure SF Pro fonts are configured in pubspec.yaml
-        primaryColor: Color(0xFFFF6F00),
+        fontFamily: 'SFPro',
+        primaryColor: const Color(0xFFFF6F00),
         scaffoldBackgroundColor: Colors.white,
       ),
       initialRoute: '/',
@@ -26,7 +27,7 @@ class ChayanKaroApp extends StatelessWidget {
         '/onboarding': (context) => OnboardingScreen(),
         '/login': (context) => LoginScreen(),
         '/otp': (context) => OtpVerificationScreen(),
-        '/home': (context) => HomeScreen(), // 👈 Add this route
+        '/home': (context) => HomeScreen(),
       },
     );
   }
