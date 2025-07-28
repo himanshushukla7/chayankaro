@@ -30,11 +30,14 @@ class ACRepairSection extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text(
-                'View All',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFFFF6F00),
+              child: const Padding(
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'View all >',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFFFF6F00),
+                  ),
                 ),
               ),
             ),
@@ -85,7 +88,9 @@ class _ACRepairCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 12),
-      child: Column(
+      width: 144,
+      height: 180,
+      child: Stack(
         children: [
           Container(
             width: 144,
@@ -99,28 +104,32 @@ class _ACRepairCard extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            width: 144,
-            height: 20,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: Color(0xFFFFD9BE),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 20,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFD9BE),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
               ),
-            ),
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 10,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 10,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

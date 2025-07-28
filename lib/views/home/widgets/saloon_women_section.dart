@@ -30,7 +30,7 @@ class SaloonWomenSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section Heading
+        // Section Title Row (no padding)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -51,40 +51,49 @@ class SaloonWomenSection extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text(
-                'View All',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFFFF6F00),
+              child: const Padding(
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'View all >',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFFFF6F00),
+                  ),
                 ),
               ),
             ),
           ],
         ),
+
         const SizedBox(height: 8),
 
-        // Scrollable card layout
+        // Scrollable card layout (starts from left edge)
         SizedBox(
           height: 384,
-          child: ListView.separated(
+          child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.zero, // remove default padding
+            padding: EdgeInsets.zero,
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 8),
             itemBuilder: (context, index) {
               final item = items[index];
-              return Column(
-                children: [
-                  _ServiceCard(
-                    title: item['title1']!,
-                    imageAsset: item['image1']!,
-                  ),
-                  const SizedBox(height: 8),
-                  _ServiceCard(
-                    title: item['title2']!,
-                    imageAsset: item['image2']!,
-                  ),
-                ],
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: index == 0 ? 0 : 8,
+                  right: index == items.length - 1 ? 16 : 0,
+                ),
+                child: Column(
+                  children: [
+                    _ServiceCard(
+                      title: item['title1']!,
+                      imageAsset: item['image1']!,
+                    ),
+                    const SizedBox(height: 8),
+                    _ServiceCard(
+                      title: item['title2']!,
+                      imageAsset: item['image2']!,
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -102,22 +111,21 @@ class _ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 144,
-          height: 164,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imageAsset),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
-          ),
+    return Container(
+      width: 144,
+      height: 164,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
+        image: DecorationImage(
+          image: AssetImage(imageAsset),
+          fit: BoxFit.cover,
         ),
-        Container(
-          width: 144,
+      ),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: double.infinity,
           height: 22,
           decoration: const BoxDecoration(
             color: Color(0xFFFFD9BE),
@@ -136,7 +144,7 @@ class _ServiceCard extends StatelessWidget {
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

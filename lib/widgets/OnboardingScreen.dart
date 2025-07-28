@@ -9,26 +9,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, String>> _onboardingData = [
-    {
-      "image": "assets/onboard1.jpg",
-      "title": "Professional Home Services",
-      "subtitle": "We provide trusted services at a friendly price — right at your doorstep.",
-    },
-    {
-      "image": "assets/onboard2.jpg",
-      "title": "Easy Booking & Scheduling",
-      "subtitle": "Book appointments effortlessly and manage your time your way.",
-    },
-    {
-      "image": "assets/onboard3.jpg",
-      "title": "Grooming at Your Home",
-      "subtitle": "Get salon-quality beauty and personal care services at your home.",
-    },
+  final List<String> _images = [
+    "assets/onboard1.jpg",
+    "assets/onboard2.jpg",
+    "assets/onboard3.jpg",
+  ];
+
+  final List<Widget> _titles = [
+    Text(
+      'We Provide Professional Home services at a very friendly price',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Color(0xFF1A1D1F),
+        fontSize: 28,
+        fontFamily: 'SF Pro Display',
+        fontWeight: FontWeight.w700,
+        height: 1.43,
+      ),
+    ),
+    Text(
+      'Easy Service booking & Scheduling',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Color(0xFF1A1D1F),
+        fontSize: 28,
+        fontFamily: 'SF Pro Display',
+        fontWeight: FontWeight.w700,
+        height: 1.43,
+      ),
+    ),
+    Text(
+      'Get Beauty parlor at your home & other Personal Grooming needs',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Color(0xFF1A1D1F),
+        fontSize: 28,
+        fontFamily: 'SF Pro Display',
+        fontWeight: FontWeight.w700,
+        height: 1.43,
+      ),
+    ),
   ];
 
   void _nextPage() {
-    if (_currentPage < _onboardingData.length - 1) {
+    if (_currentPage < _images.length - 1) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
@@ -50,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           PageView.builder(
             controller: _pageController,
-            itemCount: _onboardingData.length,
+            itemCount: _images.length,
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
@@ -58,10 +82,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 100),
                     // Circular background with image
                     Center(
                       child: Stack(
@@ -71,7 +95,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: 328,
                             width: 328,
                             decoration: BoxDecoration(
-                              color: Color(0xFFF2F4FF), // Outer light circle
+                              color: Color(0xFFF2F4FF),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -79,12 +103,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: 287,
                             width: 287,
                             decoration: BoxDecoration(
-                              color: Color(0xFFE5EAFF), // Inner lighter circle
+                              color: Color(0xFFE5EAFF),
                               shape: BoxShape.circle,
                             ),
                             child: ClipOval(
                               child: Image.asset(
-                                _onboardingData[index]['image']!,
+                                _images[index],
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -93,62 +117,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                     const SizedBox(height: 40),
-
-                    // Title Text
-                    Text(
-                      _onboardingData[index]['title']!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'SFProBold',
-                        color: Color(0xFFB94D05),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Subtitle Text
-                    Text(
-                      _onboardingData[index]['subtitle']!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'SFProRegular',
-                        color: Colors.black87,
-                      ),
-                    ),
+                    _titles[index], // Injected custom title
                   ],
                 ),
               );
             },
           ),
 
-          // Updated Skip Button with Background
-           Positioned(
-             top: 50,
-             right: 24,
-             child: GestureDetector(
-               onTap: _skip,
-               child: Container(
-                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          // Skip Button
+          Positioned(
+            top: 50,
+            right: 24,
+            child: GestureDetector(
+              onTap: _skip,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                color: Color(0xFFE6EAFF), // Background color from spec
-                borderRadius: BorderRadius.circular(20),
+                  color: Color(0xFFE6EAFF),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  "Skip",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: 'SFProSemibold',
+                    color: Color(0xFFFF6F00),
+                  ),
+                ),
               ),
-             child: Text(
-               "Skip",
-                style: TextStyle(
-                fontSize: 14,
-                fontFamily: 'SFProSemibold',
-                color: Color(0xFFFF6F00),
-        ),
-      ),
-    ),
-  ),
-),
+            ),
+          ),
 
-
-          // Bottom Arrow Button
+          // Forward Arrow Button
           Positioned(
             bottom: 50,
             left: 0,
@@ -168,7 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // Dots Indicator
+          // Page Indicator Dots
           Positioned(
             bottom: 20,
             left: 0,
@@ -176,7 +176,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                _onboardingData.length,
+                _images.length,
                 (index) => buildDot(index),
               ),
             ),

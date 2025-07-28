@@ -28,11 +28,14 @@ class MaleSpaSection extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => const MaleSpaAllScreen()),
                 );
               },
-              child: const Text(
-                'View All',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFFFF6F00),
+              child: const Padding(
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'View all >',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFFFF6F00),
+                  ),
                 ),
               ),
             ),
@@ -42,7 +45,7 @@ class MaleSpaSection extends StatelessWidget {
 
         // Horizontal Scroll Cards
         SizedBox(
-          height: 186, // 164 image + 22 label
+          height: 164, // Only image height now
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: _maleSpaItems.length,
@@ -87,25 +90,22 @@ class _MaleSpaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 144,
-          height: 164,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
-            ),
-          ),
+    return Container(
+      width: 144,
+      height: 164,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
+        image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
         ),
-        Container(
-          width: 144,
-          height: 22,
-          alignment: Alignment.center,
+      ),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
           decoration: const BoxDecoration(
             color: Color(0xFFFFD9BE),
             borderRadius: BorderRadius.only(
@@ -121,9 +121,11 @@ class _MaleSpaCard extends StatelessWidget {
               fontFamily: 'Inter',
             ),
             textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-      ],
+      ),
     );
   }
 }

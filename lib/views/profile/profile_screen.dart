@@ -1,3 +1,4 @@
+import 'package:chayankaro/views/rewards/ReferAndEarnScreen.dart';
 import 'package:flutter/material.dart';
 import '../home/home_screen.dart';
 import '../booking/booking_screen.dart';
@@ -7,8 +8,8 @@ import '../../widgets/custom_bottom_nav_bar.dart';
 import '../profile/EditProfileScreen.dart';
 import '../profile/manage_address_screen.dart';
 import '../profile/help_screen.dart';
-import '../profile/chyancoinsscreen.dart';
 import '../profile/rating_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/chayan_header.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -185,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const ChayanCoinsScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const RewardsScreen()));
                       },
                       child: buildQuickAction("My Chayan Coins", 'assets/icons/coins.png'),
                     ),
@@ -203,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const ManageAddressScreen()));
                 }),
                 buildListItem('assets/icons/refer.png', "Refer & Earn", onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const RewardsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const ReferAndEarnScreen()));
                 }),
                 buildListItem('assets/icons/rate.png', "Rate us", onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => RatingScreen()));
@@ -213,41 +214,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 buildListItem('assets/icons/logout.png', "Logout"),
                 const SizedBox(height: 20),
                 Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFEDE0),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.card_giftcard, size: 50, color: Color(0xFFE47830)),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Refer & earn 100 coins',
-                              style: TextStyle(
-                                fontFamily: 'SF Pro',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              'Get 100 coins when your friend completes their first booking',
-                              style: TextStyle(
-                                fontFamily: 'SF Pro',
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+  padding: const EdgeInsets.all(20),
+  decoration: BoxDecoration(
+    color: const Color(0xFFFFEDE0),
+    borderRadius: BorderRadius.circular(12),
+  ),
+  child: Row(
+    children: [
+      // Expanded text column first
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'Refer & earn 100 coins',
+              style: TextStyle(
+                fontFamily: 'SF Pro',
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 6),
+            Text(
+              'Get 100 coins when your friend completes their first booking',
+              style: TextStyle(
+                fontFamily: 'SF Pro',
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(width: 16),
+      // Move the gift icon to the right
+      SvgPicture.asset(
+        'assets/icons/gifty.svg',
+        height: 40,
+        width: 40,
+      ),
+    ],
+  ),
+),
+
                 const SizedBox(height: 30),
               ],
             ),

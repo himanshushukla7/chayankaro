@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.7.0
   url_launcher: ^6.2.5
+  share_plus: ^7.2.2
+  flutter_svg: ^2.0.9
+
 
 
 dev_dependencies:
@@ -90,7 +93,7 @@ flutter:
     - assets/z2.png
     - assets/z3.png
     - assets/z4.png
-    - assets/star.jpg
+    - assets/icons/star.png
     - assets/icons/ac_service.png 
     - assets/icons/home_repairs.png 
     - assets/icons/hair_skin.png
@@ -157,7 +160,10 @@ flutter:
     - assets/air_cooler.jpg
     - assets/television.jpg
     - assets/reward_giftbox.png
-
+    - assets/icons/gifty.svg
+    - assets/icons/chayansafety.png
+    - assets/icons/warranty.png
+    - assets/icons/tick.png
 
 
 

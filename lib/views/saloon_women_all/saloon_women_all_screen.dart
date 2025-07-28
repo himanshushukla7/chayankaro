@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/custom_bottom_nav_bar.dart';
+import '../../widgets/common_top_bar.dart'; // ✅ import reusable header
+
 class SaloonWomenAllScreen extends StatelessWidget {
   const SaloonWomenAllScreen({super.key});
 
@@ -16,34 +19,54 @@ class SaloonWomenAllScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          'Saloon - Women',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'SF Pro',
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 1,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: GridView.builder(
-          itemCount: services.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            childAspectRatio: 0.8,
-          ),
-          itemBuilder: (context, index) {
-            final service = services[index];
-            return _buildServiceCard(service['title']!, service['image']!);
-          },
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                // 🔶 Updated with reusable header
+                const CommonTopBar(
+                  title: 'Saloon - Women',
+                  showShareIcon: true,
+                ),
+
+                const SizedBox(height: 8),
+
+                // 🔶 Grid Body
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: GridView.builder(
+                      itemCount: services.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                        childAspectRatio: 0.8,
+                      ),
+                      itemBuilder: (context, index) {
+                        final service = services[index];
+                        return _buildServiceCard(service['title']!, service['image']!);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // 🔶 Bottom Navigation Bar
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: CustomBottomNavBar(
+                selectedIndex: 0,
+                onItemTapped: (index) {
+                  // Handle navigation
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -52,41 +75,47 @@ class SaloonWomenAllScreen extends StatelessWidget {
   Widget _buildServiceCard(String title, String imageAsset) {
     return GestureDetector(
       onTap: () {
-        // Handle navigation or sheet
+        // Open service details / sheet
       },
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imageAsset),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
+        ),
+        child: Stack(
+          children: [
+            // 🔶 Background Image
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  imageAsset,
                   fit: BoxFit.cover,
                 ),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
               ),
             ),
-          ),
-          const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFD9BE),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Inter',
+            // 🔶 Label over Image (bottom-left)
+            Positioned(
+              left: 8,
+              bottom: 8,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFD9BE),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Inter',
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

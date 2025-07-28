@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 import '../home/home_screen.dart';
 import '../booking/booking_screen.dart';
 import '../profile/profile_screen.dart';
 import '../chayan_sathi/chayan_sathi_screen.dart';
+import '../rewards/ReferAndEarnScreen.dart';
 import '../../widgets/custom_bottom_nav_bar.dart';
-import '../../widgets/chayan_header.dart';
+import '../../widgets/chayan_header.dart'; // ✅ Import the reusable header
 
 class RewardsScreen extends StatefulWidget {
   const RewardsScreen({super.key});
@@ -21,6 +23,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
 
   void _onItemTapped(int index) {
     if (index == _selectedIndex) return;
+
     switch (index) {
       case 0:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ChayanSathiScreen()));
@@ -29,230 +32,210 @@ class _RewardsScreenState extends State<RewardsScreen> {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BookingScreen()));
         break;
       case 2:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        break;
+      case 3:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const RewardsScreen()));
         break;
       case 4:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
         break;
+    }
+  }
+
+  void _launchChayanKaro() async {
+    const url = 'https://chayankaro.com';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: CustomBottomNavBar(
-          selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped,
-        ),
-        body: SafeArea(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 90),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 10),
+              // ✅ Replaced manual header with reusable ChaynHeader
+              ChayanHeader(title: 'Chayan Coins', onBackTap: () {  },),
 
-              /// Title Header
-              ChayanHeader(
-                title: 'Refer & Earn',
-                onBackTap: () => Navigator.pop(context),
-              ),
+              const SizedBox(height: 20),
 
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Main orange card
-                      Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(horizontal: 0),
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFE47830), Color(0xFFFF6E00)],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'Refer and get FREE\nServices',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(height: 6),
-                                      Text(
-                                        'Invite your friends to try Chayan Karo services. They get instant 100 coins off. You win 100 coins once they take a service.',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.white70,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Image.asset(
-                                  'assets/reward_giftbox.png',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.contain,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            const Center(
-                              child: Text(
-                                'Refer via',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  letterSpacing: 0.8,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                _socialIcon(FontAwesomeIcons.whatsapp, 'Whatsapp', Color(0xFF25D366)),
-                                _socialIcon(FontAwesomeIcons.facebookMessenger, 'Messenger', Color(0xFF0084FF)),
-                                _socialIcon(Icons.copy, 'Copy Link', Colors.black87),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      /// How it works
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: const Color(0x66FF9437),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Column(
+              // Refer & Earn section
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ReferAndEarnScreen()),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFE0C7),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
-                                'How it works?',
+                                'Refer & earn 100 coins',
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              SizedBox(height: 16),
-                              Text('1. Invite your friends & get rewarded', style: TextStyle(fontSize: 14)),
                               SizedBox(height: 8),
-                              Text('2. They get 100 coins on their first service', style: TextStyle(fontSize: 14)),
+                              Text(
+                                'Get 100 coins when your friend completes their first booking',
+                                style: TextStyle(fontSize: 12),
+                              ),
                               SizedBox(height: 8),
-                              Text('3. You get 100 coins once their service is completed', style: TextStyle(fontSize: 14)),
+                              Text(
+                                'Refer now',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xFF757575),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      const Center(
-                        child: Text(
-                          'Terms and conditions        FAQs',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Color(0xFF0C3998),
-                            letterSpacing: 0.55,
+                        const SizedBox(width: 8),
+                           SvgPicture.asset(
+                             'assets/icons/gifty.svg',
+                               height: 40,
+                               width: 40,
                           ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      const Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'You are yet to earn any scratch cards',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Opacity(
-                              opacity: 0.75,
-                              child: Text(
-                                'Start referring to get surprises',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              '......................................................................................',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Earn 100 coins on every successful referral',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 60),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
+              ),
+
+              const SizedBox(height: 30),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/coins.png',
+                      height: 30,
+                      width: 30,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Chayan Coins',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0x2BFF9437),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: Colors.black12),
+                      ),
+                      child: const Text(
+                        '100',
+                        style: TextStyle(
+                          color: Color(0xFFE47830),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'Formely Chayan Coins. Applicable on all services',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+
+              const SizedBox(height: 40),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ExpansionTile(
+                  tilePadding: EdgeInsets.zero,
+                  title: const Text(
+                    'Have a Question?',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  children: [
+                    GestureDetector(
+                      onTap: _launchChayanKaro,
+                      child: const Padding(
+                        padding: EdgeInsets.only(bottom: 12),
+                        child: Text.rich(
+                          TextSpan(
+                            text: 'At ',
+                            children: [
+                              TextSpan(
+                                text: 'chayankaro.com',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                              TextSpan(
+                                text:
+                                    ', booking a service is simple, transparent, and stress-free. We empower you to choose exactly what you need - with the right professional - at your convenience. Enjoy trusted services, seamless booking, and complete peace of mind, all from the comfort of your home.',
+                              ),
+                            ],
+                          ),
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                child: Divider(thickness: 1, color: Colors.grey),
+              ),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'Wallet Activity',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                child: Divider(thickness: 1, color: Colors.grey),
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _socialIcon(IconData icon, String label, Color color) {
-    return Column(
-      children: [
-        Container(
-          width: 54,
-          height: 54,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Icon(icon, color: Colors.white, size: 24),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, color: Colors.black),
-        ),
-      ],
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
     );
   }
 }

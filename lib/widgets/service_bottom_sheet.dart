@@ -16,13 +16,12 @@ class ServiceBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 448,
+      height: 561, // Matches Figma bottom sheet height
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
           side: const BorderSide(
             width: 1,
-            strokeAlign: BorderSide.strokeAlignOutside,
             color: Color(0xE5E47830), // Figma orange stroke
           ),
           borderRadius: const BorderRadius.only(
@@ -36,7 +35,6 @@ class ServiceBottomSheet extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title and Subtitle
             Text(
               title,
               style: const TextStyle(
@@ -56,91 +54,122 @@ class ServiceBottomSheet extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Services Grid (scrollable inside fixed height)
+            // One service per row - scrollable
             Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
+              child: ListView.separated(
                 itemCount: images.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.75,
-                ),
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
                 itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6F6F6),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            images[index],
-                            height: 90,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          images[index],
+                          width: 64,
+                          height: 64,
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(height: 8),
+                      ),
+                      const SizedBox(width: 12),
 
-                        const Text(
-                          'Service Title',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'SFProSemibold',
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-
-                        Row(
-                          children: const [
-                            Icon(Icons.star, color: Color(0xFFFFC107), size: 14),
-                            SizedBox(width: 4),
-                            Text(
-                              '4.8 (23k)',
+                      // Info
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Grooming essentials',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'SFProSemibold',
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/icons/star.png',
+                                  width: 14,
+                                  height: 14,
+                                  color: Colors.black, 
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  '4.87 (23k)',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'SFProRegular',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            const Text(
+                              '3 items',
                               style: TextStyle(
                                 fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'SFProRegular',
+                                color: Colors.black54,
                               ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: const [
+                                Text(
+                                  '₹499',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFFFA9441),
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'SFProBold',
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  '₹599',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 6),
+                      ),
 
-                        Row(
-                          children: const [
-                            Text(
-                              '₹499',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFFFA9441),
-                                fontFamily: 'SFProBold',
-                              ),
+                      // Add Button
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Color(0xFFFA9441)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            SizedBox(width: 6),
-                            Text(
-                              '₹599',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
-                                fontFamily: 'SFProRegular',
-                              ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
                             ),
-                          ],
+                          ),
+                          onPressed: () {
+                            // Add to cart or perform action
+                          },
+                          child: const Text(
+                            'Add',
+                            style: TextStyle(
+                              color: Color(0xFFFA9441),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 },
               ),

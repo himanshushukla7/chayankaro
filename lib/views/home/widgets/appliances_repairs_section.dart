@@ -16,98 +16,104 @@ class AppliancesRepairsSection extends StatelessWidget {
       {'title': 'AC Services and Repair', 'image': 'assets/ac_repair.png'},
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Title Row
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Appliances & Repairs',
-              style: TextStyle(
-                fontFamily: 'SF Pro',
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AppliancesRepairsAllScreen(),
-                  ),
-                );
-              },
-              child: const Text(
-                'View All >',
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20), // prevents overflow
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Appliances & Repairs',
                 style: TextStyle(
                   fontFamily: 'SF Pro',
                   fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  color: Color(0xFFE47830),
+                  fontSize: 16,
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AppliancesRepairsAllScreen(),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 16),
+                  child: Text(
+                    'View All >',
+                    style: TextStyle(
+                      fontFamily: 'SF Pro',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                      color: Color(0xFFE47830),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
 
-        SizedBox(
-          height: 200,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: appliances.map((appliance) {
-              return Container(
-                margin: const EdgeInsets.only(right: 12),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 144,
-                      height: 164,
-                      decoration: BoxDecoration(
+          SizedBox(
+            height: 260,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: appliances.length,
+              itemBuilder: (context, index) {
+                final appliance = appliances[index];
+                return Container(
+                  margin: EdgeInsets.only(
+                    left: index == 0 ? 16 : 0,
+                    right: 12,
+                  ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color(0xFFFFD9BE),
-                          width: 1,
-                        ),
-                        image: DecorationImage(
-                          image: AssetImage(appliance['image']!),
+                        child: Image.asset(
+                          appliance['image']!,
+                          width: 191.11,
+                          height: 260,
                           fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                    Container(
-                      width: 144,
-                      height: 22,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFFD9BE),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          width: 191.11,
+                          height: 24,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFFFD9BE),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            ),
+                          ),
+                          child: Text(
+                            appliance['title']!,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
-                      child: Text(
-                        appliance['title']!,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

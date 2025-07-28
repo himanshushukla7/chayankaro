@@ -28,11 +28,14 @@ class SpaWomenSection extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => const SpaWomenAllScreen()),
                 );
               },
-              child: const Text(
-                'View All',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFFFF6F00),
+              child: const Padding(
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'View all >',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFFFF6F00),
+                  ),
                 ),
               ),
             ),
@@ -87,43 +90,54 @@ class _SpaWomenCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 144,
-          height: 164,
-          decoration: BoxDecoration(
+    return Container(
+      width: 144,
+      height: 164,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
+      ),
+      child: Stack(
+        children: [
+          // Background Image
+          ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
+            child: Image.asset(
+              imagePath,
+              width: 144,
+              height: 164,
               fit: BoxFit.cover,
             ),
           ),
-        ),
-        Container(
-          width: 144,
-          height: 22,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            color: Color(0xFFFFD9BE),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
+
+          // Label at bottom inside image
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 22,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFD9BE),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Inter',
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Inter',
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

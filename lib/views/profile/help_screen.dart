@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../widgets/chayan_header.dart'; // ✅ make sure this is the correct import
+import '../../widgets/chayan_header.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({Key? key}) : super(key: key);
@@ -14,27 +14,27 @@ class _HelpScreenState extends State<HelpScreen> {
   final List<HelpTopic> topics = [
     HelpTopic(
       title: 'Account',
-      icon: Icons.person_outline,
+      iconPath: 'assets/icons/profile.png',
       content: '...',
     ),
     HelpTopic(
       title: 'Getting started with Chayan Karo',
-      icon: Icons.play_circle_outline,
+      iconPath: 'assets/icons/about.png',
       content: '...',
     ),
     HelpTopic(
       title: 'Payment & Chayan Coin',
-      icon: Icons.account_balance_wallet_outlined,
+      iconPath: 'assets/icons/coins.png',
       content: '...',
     ),
     HelpTopic(
       title: 'Chayan Safety',
-      icon: Icons.shield_outlined,
+      iconPath: 'assets/icons/chayansafety.png',
       content: '...',
     ),
     HelpTopic(
       title: 'Claim Warranty',
-      icon: Icons.assignment_turned_in_outlined,
+      iconPath: 'assets/icons/warranty.png',
       content: '...',
     ),
   ];
@@ -58,7 +58,6 @@ class _HelpScreenState extends State<HelpScreen> {
             onBackTap: () => Navigator.pop(context),
           ),
 
-          // ✅ Main content
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -85,12 +84,12 @@ class _HelpScreenState extends State<HelpScreen> {
 
 class HelpTopic {
   final String title;
-  final IconData icon;
+  final String iconPath;
   final String content;
 
   HelpTopic({
     required this.title,
-    required this.icon,
+    required this.iconPath,
     required this.content,
   });
 }
@@ -105,7 +104,14 @@ class HelpExpansionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       tilePadding: EdgeInsets.zero,
-      leading: Icon(topic.icon, color: Colors.orange, size: 26),
+      leading: ColorFiltered(
+        colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+        child: Image.asset(
+          topic.iconPath,
+          height: 26,
+          width: 26,
+        ),
+      ),
       title: Text(
         topic.title,
         style: const TextStyle(

@@ -4,11 +4,12 @@ class CustomBottomNavBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
 
-  const CustomBottomNavBar({
-    Key? key,
-    required this.selectedIndex,
-    required this.onItemTapped,
-  }) : super(key: key);
+ const CustomBottomNavBar({
+  Key? key,
+  required this.selectedIndex,
+  required this.onItemTapped,
+}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,36 +71,38 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget _buildCenterNavItem(String iconPath, int index) {
-    final bool isActive = selectedIndex == index;
+ Widget _buildCenterNavItem(String iconPath, int index) {
+  final bool isActive = selectedIndex == index;
 
-    return GestureDetector(
-      onTap: () => onItemTapped(index),
-      child: AnimatedScale(
-        scale: isActive ? 1.4 : 1.0,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-        child: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 6,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: ClipOval(
-            child: Image.asset(
-              iconPath,
-              fit: BoxFit.cover,
+  return GestureDetector(
+    onTap: () => onItemTapped(index),
+    child: AnimatedScale(
+      // Reduced zoom scale from 1.4 → 1.2 for smoother animation
+      scale: isActive ? 1.2 : 1.0,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+      child: Container(
+        width: 42, // reduced from 48
+        height: 42, // reduced from 48
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 3),
             ),
+          ],
+        ),
+        child: ClipOval(
+          child: Image.asset(
+            iconPath,
+            fit: BoxFit.cover,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

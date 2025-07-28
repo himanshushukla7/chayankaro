@@ -29,12 +29,15 @@ class SalonMenSection extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text(
-                "View All >",
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
+              child: const Padding(
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  "View All >",
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),
@@ -43,7 +46,7 @@ class SalonMenSection extends StatelessWidget {
         const SizedBox(height: 12),
 
         SizedBox(
-          height: 200,
+          height: 164,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: const [
@@ -79,41 +82,42 @@ class _SalonMenTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 144,
+      height: 164,
       margin: const EdgeInsets.only(right: 12),
-      child: Column(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
+        image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
         children: [
-          Container(
-            width: 144,
-            height: 164,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
+          Positioned(
+            left: 0,
+            bottom: 0,
+            child: Container(
+              width: 144,
+              height: 22,
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFD9BE),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
               ),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFFFFD9BE), width: 1),
-            ),
-          ),
-          Container(
-            width: 144,
-            height: 22,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: Color(0xFFFFD9BE),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
+              alignment: Alignment.center,
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w600,
-              ),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

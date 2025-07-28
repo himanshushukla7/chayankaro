@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF6D09D),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
